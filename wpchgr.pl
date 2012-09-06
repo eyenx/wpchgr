@@ -1,5 +1,7 @@
 #!/usr/bin/perl
 
+## by gnomeye
+
 use v5.14;
 use strict;
 use warnings;
