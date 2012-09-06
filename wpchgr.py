@@ -53,7 +53,7 @@ def getit(url):
 	wall.write(imgb)
 	wall.close()
 	## start subprocess with your favorite wpsetter.
-	subprocess.Popen('DISPLAY=:0.0 feh --bg-scale '+defdir,shell=True)
+	subprocess.Popen('DISPLAY=:0.0 feh --bg-scale --no-fehbg '+defdir,shell=True)
 
 	
 
