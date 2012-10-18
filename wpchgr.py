@@ -3,11 +3,15 @@
 ## this script downloads a random wallpaper from http://wallbase.net. Standard Resolution = 1920 x 1080 FullHD
 ## by gnomeye
 
-import os,sys,time,subprocess,urllib.request,re
+import os,sys,time,subprocess,urllib.request,re,base64
 
 # variables
 
 site = 'http://wallbase.cc/random/all/eqeq/1920x1080/0/100/32'
+op = 35
+op2 = 11
+op3 = 4
+finder = 'http://wallbase.cc/wallpaper/'
 defdir='/tmp/wall.jpg'
 archive='/media/exthome/img/wallpapers/wallbase/'
 
@@ -15,22 +19,15 @@ def getimghtml():
 	## read first random url page
 	html = urllib.request.urlopen(site)
 	pat=re.compile(".*\"(http:\/\/wallbase.cc\/wallpaper\/[0-9]+)\"")
-	for line in html.readlines():
-		line=str(line)
-		if pat.match(line):
-			mtch=pat.search(line)
-			res=mtch.group(1)
-			## get first wallpaper url and break loop
-			break
+	h=html.read().decode()
+	mtch=pat.search(h)
+	res=mtch.group(1)
 	imghtml=urllib.request.urlopen(res)
-	## search for complete jpg url path
-	pat=re.compile(".*img src\=\"(http.*wallpaper\-[0-9]+\.jpg)\".*")
-	for line in imghtml.readlines():
-		line=str(line)
-		if pat.match(line):
-			mtch=pat.search(line)
-			res=mtch.group(1)
-			break
+	## search for complete jpg url path and decode (base64)
+	pat=re.compile(".*src\=.*\+B\(\\\'(.*)\\\'\)\+.*")
+	ih=imghtml.read().decode()
+	mtch=pat.search(ih)
+	res=base64.b64decode(mtch.group(1)).decode()
 	return(res)
 
 
@@ -49,7 +46,7 @@ def getit(url):
 	wall.write(imgb)
 	wall.close()
 	## start subprocess with your favorite wpsetter.
-	subprocess.Popen('DISPLAY=:0.0 feh --bg-scale --no-fehbg '+defdir,shell=True)
+	subprocess.Popen('DISPLAY=:0.0 feh --bg-scale '+defdir,shell=True)
 
 	
 
