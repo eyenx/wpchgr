@@ -57,4 +57,5 @@ def testimghtml():
 		text=getimghtml()
 	getit(text)
 
-testimghtml()
+if __name__ == '__main__':
+    testimghtml()
