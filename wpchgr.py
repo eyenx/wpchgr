@@ -17,36 +17,39 @@ archive='/media/exthome/img/wallpapers/wallbase/'
 
 def getimghtml():
 	## read first random url page
-	html = urllib.request.urlopen(site)
-	pat=re.compile(".*\"(http:\/\/wallbase.cc\/wallpaper\/[0-9]+)\"")
-	h=html.read().decode()
-	mtch=pat.search(h)
-	res=mtch.group(1)
-	imghtml=urllib.request.urlopen(res)
+  reqsite=urllib.request.Request(site)
+  html = urllib.request.urlopen(reqsite)
+  pat=re.compile(".*\"(http:\/\/wallbase.cc\/wallpaper\/[0-9]+)\"")
+  h=html.read().decode()
+  mtch=pat.search(h)
+  res=mtch.group(1)
+  reqres=urllib.request.Request(res)
+  imghtml=urllib.request.urlopen(reqres)
 	## search for complete jpg url path and decode (base64)
-	pat=re.compile(".*src\=.*\+B\(\\\'(.*)\\\'\)\+.*")
-	ih=imghtml.read().decode()
-	mtch=pat.search(ih)
-	res=base64.b64decode(mtch.group(1)).decode()
-	return(res)
+  pat=re.compile(".*src\=.*\+B\(\\\'(.*)\\\'\)\+.*")
+  ih=imghtml.read().decode()
+  mtch=pat.search(ih)
+  res=base64.b64decode(mtch.group(1)).decode()
+  return(res)
 
 
 
 
 def getit(url):
 	## get img in bytes
-	img=urllib.request.urlopen(url)
-	imgb=img.read()
+  requrl=urllib.request.Request(url)
+  img=urllib.request.urlopen(requrl)
+  imgb=img.read()
 	## open archive and write bytes into it
-	arch=open(archive+'wallbase-'+url[-10:],'wb')
-	arch.write(imgb)
-	arch.close()
+  arch=open(archive+'wallbase-'+url[-10:],'wb')
+  arch.write(imgb)
+  arch.close()
 	## open wallpaper dir (defdir) and write same bytes into it
-	wall=open(defdir,'wb')
-	wall.write(imgb)
-	wall.close()
+  wall=open(defdir,'wb')
+  wall.write(imgb)
+  wall.close()
 	## start subprocess with your favorite wpsetter.
-	subprocess.Popen('DISPLAY=:0.0 feh --bg-scale '+defdir,shell=True)
+  subprocess.Popen('DISPLAY=:0.0 feh --bg-scale '+defdir,shell=True)
 
 	
 
