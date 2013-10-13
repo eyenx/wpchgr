@@ -7,10 +7,8 @@ import subprocess,urllib.request,re,base64
 
 # variables
 
-site = 'http://wallbase.cc/random/all/eqeq/1920x1080/0/100/32'
-op = 35
-op2 = 11
-op3 = 4
+#site = 'http://wallbase.cc/random/all/eqeq/1920x1080/0/100/32'
+site="http://wallbase.cc/random?section=wallpapers&q=&res_opt=eqeq&res=1920x1080&thpp=32&purity=100&board=21&aspect=0.00"
 finder = 'http://wallbase.cc/wallpaper/'
 defdir='/tmp/wall.jpg'
 archive='/media/exthome/img/wallpapers/wallbase/'
@@ -23,13 +21,17 @@ def getimghtml():
   h=html.read().decode()
   mtch=pat.search(h)
   res=mtch.group(1)
+  print(res)
   reqres=urllib.request.Request(res)
   imghtml=urllib.request.urlopen(reqres)
 	## search for complete jpg url path and decode (base64)
-  pat=re.compile(".*src\=.*\+B\(\\\'(.*)\\\'\)\+.*")
+  #pat=re.compile(".*src\=.*\+B\(\\\'(.*)\\\'\)\+.*") ## no more b64
+  pat=re.compile(".*src\=\"(http:\/\/wallpapers.wallbase.cc\/.*)\" class")
   ih=imghtml.read().decode()
   mtch=pat.search(ih)
-  res=base64.b64decode(mtch.group(1)).decode()
+  #res=base64.b64decode(mtch.group(1)).decode()
+  res=mtch.group(1)
+  print(res)
   return(res)
 
 
