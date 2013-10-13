@@ -21,7 +21,6 @@ def getimghtml():
   h=html.read().decode()
   mtch=pat.search(h)
   res=mtch.group(1)
-  print(res)
   reqres=urllib.request.Request(res)
   imghtml=urllib.request.urlopen(reqres)
 	## search for complete jpg url path and decode (base64)
@@ -31,7 +30,6 @@ def getimghtml():
   mtch=pat.search(ih)
   #res=base64.b64decode(mtch.group(1)).decode()
   res=mtch.group(1)
-  print(res)
   return(res)
 
 
