@@ -51,14 +51,11 @@ def getit(url):
 	## start subprocess with your favorite wpsetter.
   subprocess.Popen('DISPLAY=:0.0 feh --bg-scale '+defdir,shell=True)
 
-	
 
-def testimghtml():
+
+if __name__ == '__main__':
 	text = getimghtml()
 	## just test if valid jpg url - if not try again
 	while '.jpg' not in text:
 		text=getimghtml()
 	getit(text)
-
-if __name__ == '__main__':
-    testimghtml()
