@@ -3,7 +3,7 @@
 ## this script downloads a random wallpaper from http://wallbase.net. Standard Resolution = 1920 x 1080 FullHD
 ## by gnomeye
 
-import subprocess,urllib.request,re,base64
+import subprocess,urllib.request,re # base64
 
 # variables
 
@@ -54,8 +54,8 @@ def getit(url):
 
 
 if __name__ == '__main__':
-	text = getimghtml()
-	## just test if valid jpg url - if not try again
-	while '.jpg' not in text:
-		text=getimghtml()
-	getit(text)
+  text = getimghtml()
+  ## just test if valid jpg url - if not try again
+  while '.jpg' not in text:
+    text=getimghtml()
+  getit(text)
